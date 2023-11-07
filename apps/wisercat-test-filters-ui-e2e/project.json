@@ -1,0 +1,33 @@
+{
+  "name": "wisercat-test-filters-ui-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/wisercat-test-filters-ui-e2e/src",
+  "targets": {
+    "e2e": {
+      "executor": "@nx/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/wisercat-test-filters-ui-e2e/cypress.config.ts",
+        "testingType": "e2e",
+        "devServerTarget": "wisercat-test-filters-ui:serve:development"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "wisercat-test-filters-ui:serve:production"
+        },
+        "ci": {
+          "devServerTarget": "wisercat-test-filters-ui:serve-static"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/wisercat-test-filters-ui-e2e/**/*.{js,ts}"]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["wisercat-test-filters-ui"]
+}
