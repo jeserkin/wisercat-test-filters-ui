@@ -1,4 +1,4 @@
-# WisercatTestFiltersUi
+# Wisercat Test Filters UI
 
 <a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
 
@@ -17,6 +17,14 @@ If you happen to use Nx plugins, you can leverage code generators that might com
 Run `nx list` to get a list of available plugins and whether they have generators. Then run `nx list <plugin-name>` to see what generators are available.
 
 Learn more about [Nx generators on the docs](https://nx.dev/plugin-features/use-code-generators).
+
+### Useful commands
+
+* `nx serve wisercat-test-filters-ui --configuration=local` - to perform API calls through proxy
+* `nx g @schematics/angular:component <name> --project=<project> --inlineStyle --dry-run`
+* `nx g @nx/angular:service [<path>/]<name> --project=<project> --dry-run`
+* `nx g @nx/angular:module <name> --project=<project> --routing --dry-run`
+* `nx g <dependency-name/version>:ng-add --project=<project> --dry-run`
 
 ## Running tasks
 
@@ -46,7 +54,7 @@ Have a look at the [Nx Console extensions](https://nx.dev/nx-console). It provid
 
 ## Ready to deploy?
 
-Just run `nx build demoapp` to build the application. The build artifacts will be stored in the `dist/` directory, ready to be deployed.
+Just run `nx build wisercat-test-filters-ui` to build the application. The build artifacts will be stored in the `dist/` directory, ready to be deployed.
 
 ## Set up CI!
 

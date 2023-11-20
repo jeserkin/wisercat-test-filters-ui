@@ -1,0 +1,104 @@
+<form [formGroup]="formGroup">
+    <div class="mb-3 row">
+        <label for="filterName" class="col-sm-2 col-form-label">Filter name</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" id="filterName" [formControl]="filterNameFormControl">
+        </div>
+    </div>
+
+    <div class="mb-3 row">
+        <label class="col-sm-2 col-form-label">Criteria</label>
+        <div class="col-sm-10" formArrayName="criteria">
+            <ng-container *ngFor="let criteriaItem of criteriaFormArray.controls; let i=index" [formGroupName]="i">
+                <div class="mb-3 row g-3">
+                    <div class="col-sm">
+                        <select class="form-select" aria-label="Default select example" formControlName="type">
+                            <option *ngFor="let allowedType of allowedTypes" [ngValue]="allowedType">
+                                {{ allowedType }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-sm">
+                        <select class="form-select" aria-label="Default select example" formControlName="parameter">
+                            <option *ngFor="let allowedParameterValue of getParametersBasedOnType(criteriaItem.get('type')!.value)" [ngValue]="allowedParameterValue">
+                                {{ allowedParameterValue }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-sm">
+                        <ng-container [ngSwitch]="criteriaItem.get('type')!.value">
+                            <!-- number field -->
+                            <input type="number" class="form-control" formControlName="value" *ngSwitchCase="'Amount'">
+
+                            <!-- text field -->
+                            <input type="text" class="form-control" formControlName="value" *ngSwitchCase="'Title'">
+
+                            <!-- datepicker field -->
+                            <div class="input-group" *ngSwitchCase="'Date'">
+                                <input #value="ngbDatepicker" class="form-control" formControlName="value" ngbDatepicker [placement]="'left'" [positionTarget]="buttonEl" />
+                                <button #buttonEl class="btn btn-outline-secondary bi bi-calendar2-week" (click)="value.toggle()" type="button"></button>
+                            </div>
+                        </ng-container>
+                    </div>
+                    <div class="col-sm-1">
+                        <button type="button" class="btn btn-danger" [disabled]="criteriaFormArray.length === 1" (click)="removeCriteriaItem(i)">
+                            <i class="bi bi-dash"></i>
+                        </button>
+                    </div>
+                </div>
+            </ng-container>
+
+            <div class="mb-3 row">
+                <div class="col-sm">
+                    <div class="text-center">
+                        <div class="row justify-content-center">
+                            <div class="col">
+                                <button type="button" class="btn btn-primary btn-sm" (click)="addCriteriaItem()">
+                                    <i class="bi bi-plus"></i>&nbsp;Add criteria
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-3 row">
+        <label class="col-sm-2 col-form-label pt-0">Selection</label>
+        <div class="col-sm">
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" formControlName="selection" id="selection_1" value="1">
+                <label class="form-check-label" for="selection_1">Select 1</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" formControlName="selection" id="selection_2" value="2">
+                <label class="form-check-label" for="selection_2">Select 2</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" formControlName="selection" id="selection_3" value="3">
+                <label class="form-check-label" for="selection_3">Select 3</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="py-3 row bg-body-tertiary">
+        <div class="col-sm">
+            <div class="row">
+                <div class="col-6 text-end">
+                    <button type="button" class="btn btn-secondary" (click)="close()">
+                        {{ 'Close' | uppercase }}
+                    </button>
+                </div>
+
+                <div class="col-6 text-start">
+                    <button type="button" class="btn btn-primary" (click)="save()">
+                        {{ 'Save' | uppercase }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
